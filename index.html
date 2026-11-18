@@ -260,8 +260,9 @@ body.is-open .letter{opacity:1}
 
 
       <section class="days" id="days">
-        <p class="days-kicker">Our Days of Celebration</p>
-        <h2 class="month-title"><svg aria-hidden="true"><use href="#sprig"/></svg><span id="monthTitle"></span><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#sprig"/></svg></h2>
+        <p class="days-kicker">Our Day of Celebration</p>
+        <h2 class="month-title"><svg aria-hidden="true"><use href="#sprig"/></svg><span id="monthTitle">Nikah Ceremony</span><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#sprig"/></svg></h2>
+        <p class="days-kicker" id="eventDate"></p>
                 <div class="cal-frame">
           <span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span>
           <div class="cal" id="cal"></div>
@@ -269,12 +270,6 @@ body.is-open .letter{opacity:1}
       </section>
 
       <div class="divider" style="margin-top:3rem"><i></i></div>
-      <div class="monos closing-mono" aria-hidden="true" style="visibility:hidden"><div class="mono"><span class="amp">&amp;</span><span class="a" data-k="groomInitial"></span><span class="b" data-k="brideInitial"></span><svg class="lily"><use href="#lily"/></svg></div></div>
-
-      <p class="family-blessing">With Love &amp; Blessings of</p>
-      <div class="family-names" id="elders"></div>
-
-      <div class="closing-rule"></div>
       <p class="closing-blessing">With Best Compliments From</p>
       <p class="closing-compliments" id="compliments"></p>
       <p class="closing-note" data-k="message"></p>
@@ -301,7 +296,7 @@ const CONFIG = {
   elders: ["Mr. Huzefa Yousuf Mamuwala", "Mrs. Umme Aiman Huzefa Mamuwala"],
   hosts: ["Mr. Huzefa Yousuf Mamuwala", "Mrs. Umme Aiman Huzefa Mamuwala"],
   inviteLine: "invite your gracious presence and blessings to celebrate the wedding of their son",
-  brideParents: "Mr. Hasnain Jamali & Mrs. Masuma Hasnain",
+  brideParents: "Mr. Hasnain Jamali & Mrs. Masooma Hasnain",
   events: [
     { date: "2027-03-20", name: "[Event Name]", time: "[Time]", venue: "[Venue Name],", area: "[Area],", city: "[City]", mapUrl: "" }
   ],
@@ -326,7 +321,7 @@ const main=parse(CONFIG.events[0].date);
 document.querySelectorAll("[data-k]").forEach(el=>el.textContent=CONFIG[el.dataset.k]??"");
 $("envDate").textContent=`${main.getDate()} . ${MON[main.getMonth()]} . ${main.getFullYear()}`;
 $("grace").innerHTML=CONFIG.grace.map(l=>`<span>${esc(l)}</span>`).join("");
-$("elders").innerHTML=CONFIG.elders.map(n=>`<span>${esc(n)}</span>`).join("");
+if($("elders"))$("elders").innerHTML=CONFIG.elders.map(n=>`<span>${esc(n)}</span>`).join("");
 $("hosts").innerHTML=CONFIG.hosts.map(n=>`<span>${esc(n)}</span>`).join(`<span>&amp;</span>`);
 $("compliments").innerHTML=CONFIG.compliments.map(esc).join("<br>");
 
@@ -392,7 +387,7 @@ function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(see
 
 /* ---------- calendar + event card ---------- */
 (function(){
-  const y=main.getFullYear(),m=main.getMonth();$("monthTitle").textContent=`${MONTH[m]} ${y}`;
+  const y=main.getFullYear(),m=main.getMonth();$("eventDate").textContent=`${ord(main.getDate())} ${MONTH[m]}, ${y}`;
   const byDay={};CONFIG.events.forEach((e,i)=>{const d=parse(e.date);if(d.getFullYear()===y&&d.getMonth()===m)byDay[d.getDate()]=i});
   let h=["Su","Mo","Tu","We","Th","Fr","Sa"].map(d=>`<span class="dow">${d}</span>`).join("")+`<span class="dow-rule"></span>`;
   const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();for(let i=0;i<start;i++)h+="<span></span>";
